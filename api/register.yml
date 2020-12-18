@@ -1,7 +1,7 @@
 
 name: 注册
 variables:
-    mobile_phone: phone
+    mobile_phone: ${read_excel_data()}
     password: 12345678
 
 base_url: http://120.78.128.25:8766/futureloan
@@ -12,9 +12,12 @@ request:
         Content-Type: "application/json"
         X-Lemonban-Media-Type: "lemonban.v2"
     json:
-        mobile_phone: $phone
+        mobile_phone: $mobile_phone
         pwd: $password
 validate:
     - eq: ["status_code", 200]
-    - contains: ["content.data.token_info", token]
+    - eq: ["${get_sql_data()}", $mobile_phone]
+
+
+#    - contains: ["content.data.token_info", token]
 #    - {"check": "content.data", "comparator": "contains", "expect": id}

@@ -1,0 +1,9 @@
+
+config:
+    name: "注册接口"
+    base_url: http://120.78.128.25:8766/futureloan
+
+teststeps:
+-
+    name: 注册
+    api: api/register.yml

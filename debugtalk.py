@@ -1,6 +1,6 @@
 from pymysql.cursors import DictCursor
 
-from common import mysql_handler, excel_hander
+from common import mysql_handler, excel_hander, yaml_hander
 import time
 
 
@@ -20,7 +20,7 @@ def get_phone():
 def read_excel_data():
     data_path = r"F:\python\python_hrun\data\testdata.xlsx"
     data = excel_hander.ExcelHandler(data_path).read_sheet_data("register")
-    return data
+    return data[0]["mobile_phone"]
 
 
 def get_sql_data():
@@ -32,11 +32,17 @@ def get_sql_data():
         charset="utf8",
         cursorclass=DictCursor
     )
-    phone_sql = "select mobile_phone from futureloan.member where  mobile_phone={};".format(read_excel_data()[0]["mobile_phone"])
-    phone_recode = SQL.select_data(sql=phone_sql)
-    if phone_recode:
+    phone = read_excel_data()
+    phone_sql = "select * from futureloan.member where  mobile_phone={};".format(phone)
+    phone_recode = SQL.select_data(phone_sql)
+    if not phone_recode:
         return phone_recode
 
 
+def read_yaml_data():
+    data = yaml_hander.read_yaml(r"api/register.yml")
+    return data
+
+
 if __name__ == '__main__':
-    print(get_sql_data())
+    print(read_yaml_data())
