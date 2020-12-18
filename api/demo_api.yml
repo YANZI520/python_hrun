@@ -1,0 +1,21 @@
+
+name: 注册
+variables:
+    password: 12345678
+
+base_url: http://120.78.128.25:8766/futureloan
+request:
+    url: /member/register
+    method: POST
+    headers:
+        Content-Type: "application/json"
+        X-Lemonban-Media-Type: "lemonban.v2"
+    json:
+        mobile_phone: ${get_phone()}
+        pwd: $password
+        type: 0
+        reg_name: 燕子
+validate:
+    - eq: ["status_code", 200]
+    - contains: ["content.data", id]
+#    - {"check": "content.data", "comparator": "contains", "expect": id}

@@ -1,0 +1,16 @@
+
+config:
+    name: "获取注册成功的手机号"
+    base_url: http://120.78.128.25:8766/futureloan
+
+teststeps:
+-
+    name: 注册
+    api: api/demo_api.yml
+    extract:
+        - phone: content.data.mobile_phone
+
+-
+    name: 登录
+    api: api/login.yml
+

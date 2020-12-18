@@ -1,0 +1,20 @@
+
+name: 登录
+variables:
+    mobile_phone: phone
+    password: 12345678
+
+base_url: http://120.78.128.25:8766/futureloan
+request:
+    url: /member/login
+    method: POST
+    headers:
+        Content-Type: "application/json"
+        X-Lemonban-Media-Type: "lemonban.v2"
+    json:
+        mobile_phone: $phone
+        pwd: $password
+validate:
+    - eq: ["status_code", 200]
+    - contains: ["content.data.token_info", token]
+#    - {"check": "content.data", "comparator": "contains", "expect": id}
