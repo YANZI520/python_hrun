@@ -35,14 +35,9 @@ def get_sql_data():
     phone = read_excel_data()
     phone_sql = "select * from futureloan.member where  mobile_phone={};".format(phone)
     phone_recode = SQL.select_data(phone_sql)
-    if not phone_recode:
-        return phone_recode
-
-
-def read_yaml_data():
-    data = yaml_hander.read_yaml(r"api/register.yml")
-    return data
+    if phone_recode:
+        return phone_recode["mobile_phone"]
 
 
 if __name__ == '__main__':
-    print(read_yaml_data())
+    print(get_sql_data())
